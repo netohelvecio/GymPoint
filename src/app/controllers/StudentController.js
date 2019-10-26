@@ -32,7 +32,6 @@ class StudentController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      emailCheck: Yup.string().required(),
       name: Yup.string(),
       email: Yup.string().email(),
       age: Yup.number(),
@@ -44,27 +43,27 @@ class StudentController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { emailCheck, email } = req.body;
+    const { id } = req.params;
 
-    const student = await Student.findOne({
-      where: { email: emailCheck },
-    });
+    const student = await Student.findByPk(id);
 
     if (!student) {
       return res.status(400).json({ error: 'Student does not exist' });
     }
 
-    if (email !== student.email) {
-      const studentExists = await Student.findOne({ where: { email } });
+    const { email } = req.body;
 
-      if (studentExists) {
+    if (email !== student.email) {
+      const emailExists = await Student.findOne({ where: { email } });
+
+      if (emailExists) {
         return res.status(400).json({ error: 'Email already used' });
       }
     }
 
-    const { id, name, age, weight, height } = await student.update(req.body);
+    const studentUp = await student.update(req.body);
 
-    return res.json({ id, name, email, age, weight, height });
+    return res.json(studentUp);
   }
 }
 
