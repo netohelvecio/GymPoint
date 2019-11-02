@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
+// criação de model de Student
 class Student extends Model {
   static init(sequelize) {
     super.init(
@@ -12,6 +13,8 @@ class Student extends Model {
       },
       { sequelize }
     );
+
+    return this;
   }
 }
 

@@ -1,6 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
 
+// criação de model de User
 class User extends Model {
   static init(sequelize) {
     super.init(
@@ -17,6 +18,7 @@ class User extends Model {
     return this;
   }
 
+  // criptografa senha com bcryptjs
   checkPassword(password) {
     return bcryptjs.compare(password, this.password_hash);
   }

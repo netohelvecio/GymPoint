@@ -13,6 +13,7 @@ class StudentController {
       height: Yup.number().required(),
     });
 
+    // verifica se o form está preenchido de forma correta
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -21,10 +22,12 @@ class StudentController {
       where: { email: req.body.email },
     });
 
+    // verifica se o email já esta sendo utilizado
     if (studentExists) {
       return res.status(400).json({ error: 'Email already used' });
     }
 
+    // cria usuario no banco
     const student = await Student.create(req.body);
 
     return res.json(student);
@@ -39,6 +42,7 @@ class StudentController {
       height: Yup.number(),
     });
 
+    // verifica se o form está preenchido de forma correta
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -47,12 +51,14 @@ class StudentController {
 
     const student = await Student.findByPk(id);
 
+    // verifica se o student é existente
     if (!student) {
       return res.status(400).json({ error: 'Student does not exist' });
     }
 
     const { email } = req.body;
 
+    // verifica se o email já esta sendo utilizado
     if (email !== student.email) {
       const emailExists = await Student.findOne({ where: { email } });
 
@@ -61,6 +67,7 @@ class StudentController {
       }
     }
 
+    // atualiza dados
     const studentUp = await student.update(req.body);
 
     return res.json(studentUp);
