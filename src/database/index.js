@@ -3,11 +3,12 @@ import Sequelize from 'sequelize';
 // import de models
 import User from '../app/models/User';
 import Student from '../app/models/Student';
+import Plan from '../app/models/Plan';
 
 // import de config do banco de dados
 import databaseConfig from '../config/database';
 
-const models = [User, Student]; // models add no array
+const models = [User, Student, Plan]; // models add no array
 
 class Database {
   constructor() {
