@@ -1,9 +1,21 @@
 import * as Yup from 'yup';
-import { endOfDay, parseISO, isBefore, addMonths, startOfHour } from 'date-fns';
+import {
+  endOfDay,
+  parseISO,
+  isBefore,
+  addMonths,
+  startOfHour,
+  format,
+} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import Matriculation from '../models/Matriculation';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
+
+import MatriculationMail from '../jobs/MatriculationMail';
+
+import Queue from '../../lib/Queue';
 
 class MatriculationController {
   async store(req, res) {
@@ -49,12 +61,30 @@ class MatriculationController {
     // valor total da matricula
     const priceTotal = planExists.price * planExists.duration;
 
+    // data inicial da matricula
+    const starDate = startOfHour(parseISO(start_date));
+
     const matriculation = await Matriculation.create({
       student_id,
       plan_id,
-      start_date: startOfHour(parseISO(start_date)),
+      start_date: starDate,
       end_date: dateEndMatriculation,
       price: priceTotal,
+    });
+
+    // formatação de datas
+    const starDateFormatted = format(starDate, 'dd/MM/yyyy', { locale: pt });
+    const endDateFormatted = format(dateEndMatriculation, 'dd/MM/yyyy', {
+      locale: pt,
+    });
+
+    // manda dados para fila de email
+    await Queue.add(MatriculationMail.key, {
+      studentExists,
+      planExists,
+      priceTotal,
+      starDateFormatted,
+      endDateFormatted,
     });
 
     return res.json(matriculation);
