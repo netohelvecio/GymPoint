@@ -31,6 +31,7 @@ class HelpOrderController {
       return res.status(400).json({ error: 'Current plan expired' });
     }
 
+    // cria pergunta
     const helpOrder = await HelpOrder.create({ student_id: id, question });
 
     return res.json(helpOrder);
@@ -49,6 +50,7 @@ class HelpOrderController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
+    // lista as perguntas feitas pelo estudante
     const helpers = await HelpOrder.findAll({
       where: { student_id: id },
       attributes: ['id', 'question', 'answer', 'answer_at'],

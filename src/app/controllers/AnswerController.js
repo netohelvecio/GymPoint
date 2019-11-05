@@ -1,11 +1,17 @@
 import * as Yup from 'yup';
 
 import HelpOrder from '../models/HelpOrder';
+import Student from '../models/Student';
+
+import AnswerMail from '../jobs/AnswerMail';
+
+import Queue from '../../lib/Queue';
 
 class AnswerController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
+    // lista perguntas não respondidas
     const answers = await HelpOrder.findAll({
       where: { answer: null },
       limit: 10,
@@ -28,18 +34,24 @@ class AnswerController {
     const { id } = req.params;
     const { answer } = req.body;
 
-    const helpIsExist = await HelpOrder.findByPk(id);
+    // verifica se pergunta existe
+    const helpIsExist = await HelpOrder.findByPk(id, {
+      include: [
+        { model: Student, as: 'student', attributes: ['name', 'email'] },
+      ],
+    });
 
     if (!helpIsExist) {
       return res.status(400).json({ error: 'Question does not exist' });
     }
 
-    const help = await helpIsExist.update({
-      answer,
-      answer_at: new Date(),
-    });
+    // atualiza a resposta da pergunta
+    await helpIsExist.update({ answer, answer_at: new Date() });
 
-    return res.json(help);
+    // envia resposta por email
+    await Queue.add(AnswerMail.key, { helpIsExist });
+
+    return res.json(helpIsExist);
   }
 }
 
