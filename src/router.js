@@ -8,6 +8,7 @@ import PlanController from './app/controllers/PlanController';
 import MatriculationController from './app/controllers/MatriculationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
+import AnswerController from './app/controllers/AnswerController';
 
 // import de middleware
 import authMiddleware from './app/middlewares/auth';
@@ -22,8 +23,9 @@ routes.post('/students/:id/checkins', CheckinController.store);
 routes.get('/students/:id/checkins', CheckinController.index);
 
 routes.post('/students/:id/help-orders', HelpOrderController.store);
+routes.get('/students/:id/help-orders', HelpOrderController.index);
 
-// rotas depois daque é obragatorio middlewares
+// rotas depois daqui é obragatorio middlewares
 routes.use(authMiddleware);
 
 routes.post('/students', StudentController.store);
@@ -40,5 +42,8 @@ routes.post('/matriculations', MatriculationController.store);
 routes.get('/matriculations', MatriculationController.index);
 routes.put('/matriculations/:id', MatriculationController.update);
 routes.delete('/matriculations/:id', MatriculationController.delete);
+
+routes.get('/help-orders/answer', AnswerController.index);
+routes.post('/help-orders/:id/answer', AnswerController.store);
 
 export default routes;
