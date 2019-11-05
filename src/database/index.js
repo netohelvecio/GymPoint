@@ -5,11 +5,12 @@ import User from '../app/models/User';
 import Student from '../app/models/Student';
 import Plan from '../app/models/Plan';
 import Matriculation from '../app/models/Matriculation';
+import Checkin from '../app/models/Checkin';
 
 // import de config do banco de dados
 import databaseConfig from '../config/database';
 
-const models = [User, Student, Plan, Matriculation]; // models add no array
+const models = [User, Student, Plan, Matriculation, Checkin]; // models add no array
 
 class Database {
   constructor() {
