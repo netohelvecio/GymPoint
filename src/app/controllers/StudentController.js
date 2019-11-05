@@ -72,6 +72,35 @@ class StudentController {
 
     return res.json(studentUp);
   }
+
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    // lista students cadastrados
+    const students = await Student.findAll({
+      attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
+
+    return res.json(students);
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+
+    // verifica se o student é existente
+    if (!student) {
+      return res.status(400).json({ error: 'Student does not exist' });
+    }
+
+    // deleta student
+    await student.destroy();
+
+    return res.json({ message: 'Plan deleted' });
+  }
 }
 
 export default new StudentController();

@@ -1,6 +1,5 @@
-import { isBefore, subDays, format } from 'date-fns';
+import { isBefore, subDays } from 'date-fns';
 import { Op } from 'sequelize';
-import pt from 'date-fns/locale/pt';
 
 import Checkin from '../models/Checkin';
 import Matriculation from '../models/Matriculation';
@@ -9,6 +8,7 @@ class ChekinController {
   async store(req, res) {
     const { id } = req.params;
 
+    // student faz checkin somente se estiver matriculado
     const studentExists = await Matriculation.findOne({
       where: { student_id: id },
     });
@@ -33,6 +33,7 @@ class ChekinController {
       },
     });
 
+    // caso estiver acima de 5 checkins retorna error
     if (verifyCheckin >= 5) {
       return res
         .status(400)
@@ -57,6 +58,7 @@ class ChekinController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
+    // lista checkin realizados
     const checkins = await Checkin.findAll({
       where: { student_id: id },
       order: ['created_at'],
