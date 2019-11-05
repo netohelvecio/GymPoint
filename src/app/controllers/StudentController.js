@@ -99,7 +99,7 @@ class StudentController {
     // deleta student
     await student.destroy();
 
-    return res.json({ message: 'Plan deleted' });
+    return res.json({ message: 'Student deleted' });
   }
 }
 
