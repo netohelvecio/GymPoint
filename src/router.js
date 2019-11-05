@@ -7,6 +7,7 @@ import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import MatriculationController from './app/controllers/MatriculationController';
 import CheckinController from './app/controllers/CheckinController';
+import HelpOrderController from './app/controllers/HelpOrderController';
 
 // import de middleware
 import authMiddleware from './app/middlewares/auth';
@@ -16,8 +17,11 @@ const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
 
+// rotas de alunos
 routes.post('/students/:id/checkins', CheckinController.store);
 routes.get('/students/:id/checkins', CheckinController.index);
+
+routes.post('/students/:id/help-orders', HelpOrderController.store);
 
 // rotas depois daque é obragatorio middlewares
 routes.use(authMiddleware);
