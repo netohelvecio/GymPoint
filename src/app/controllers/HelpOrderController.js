@@ -47,7 +47,7 @@ class HelpOrderController {
 
     // verifica se student existe
     if (!studentExists) {
-      return res.status(400).json({ error: 'Student does not exists' });
+      return res.status(400).json({ error: 'Student does not exists' })
     }
 
     // lista as perguntas feitas pelo estudante

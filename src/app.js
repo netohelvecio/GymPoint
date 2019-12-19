@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 
 import routes from './router';
 
@@ -15,6 +16,7 @@ class App {
   // middleware para utilizar formato json no express
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
   }
 
   // utiliza rotas
