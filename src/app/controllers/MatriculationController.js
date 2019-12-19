@@ -98,7 +98,7 @@ class MatriculationController {
       order: ['start_date'],
       limit: 10,
       offset: (page - 1) * 10,
-      attributes: ['id', 'start_date', 'end_date', 'price'],
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         { model: Student, as: 'student', attributes: ['name', 'email'] },
         { model: Plan, as: 'plan', attributes: ['title', 'duration'] },
