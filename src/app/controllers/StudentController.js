@@ -81,14 +81,25 @@ class StudentController {
     // lista students cadastrados
     const students = await Student.findAll({
       attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 8,
+      offset: (page - 1) * 8,
       where: {
-        name: { [Op.like]: `%${name}%` },
+        name: { [Op.iLike]: `%${name}%` },
       },
     });
 
     return res.json(students);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    // lista unico student pelo id
+    const student = await Student.findByPk(id, {
+      attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
+    });
+
+    return res.json(student);
   }
 
   async delete(req, res) {
