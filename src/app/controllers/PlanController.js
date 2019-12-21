@@ -28,11 +28,22 @@ class PlanController {
     const plans = await Plan.findAll({
       order: ['created_at'],
       attributes: ['id', 'title', 'duration', 'price'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 8,
+      offset: (page - 1) * 8,
     });
 
     return res.json(plans);
+  }
+  
+  async show(req, res) {
+    const { id } = req.params;
+
+    // lista unico plan pelo id
+    const plan = await Plan.findByPk(id, {
+      attributes: ['id', 'title', 'duration', 'price'],
+    });
+
+    return res.json(plan);
   }
 
   async update(req, res) {
