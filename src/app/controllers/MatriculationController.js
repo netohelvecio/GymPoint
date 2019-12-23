@@ -96,8 +96,8 @@ class MatriculationController {
     // matriculas existentes
     const matriculation = await Matriculation.findAll({
       order: ['start_date'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 8,
+      offset: (page - 1) * 8,
       attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         { model: Student, as: 'student', attributes: ['name', 'email'] },

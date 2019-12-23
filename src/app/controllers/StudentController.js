@@ -76,7 +76,7 @@ class StudentController {
   }
 
   async index(req, res) {
-    const { page = 1, name } = req.query;
+    const { page = 1, name = '' } = req.query;
 
     // lista students cadastrados
     const students = await Student.findAll({
