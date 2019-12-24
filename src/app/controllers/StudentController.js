@@ -81,8 +81,8 @@ class StudentController {
     // lista students cadastrados
     const students = await Student.findAll({
       attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
-      limit: 8,
-      offset: (page - 1) * 8,
+      limit: 7,
+      offset: (page - 1) * 7,
       where: {
         name: { [Op.iLike]: `%${name}%` },
       },

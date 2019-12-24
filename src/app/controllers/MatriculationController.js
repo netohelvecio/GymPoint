@@ -115,7 +115,7 @@ class MatriculationController {
     const matriculation = await Matriculation.findByPk(id, {
       attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
-        { model: Student, as: 'student', attributes: ['name', 'email'] },
+        { model: Student, as: 'student', attributes: ['id', 'name', 'email'] },
         { model: Plan, as: 'plan', attributes: ['title', 'duration', 'id', 'price'] },
       ],
     });

@@ -28,8 +28,8 @@ class PlanController {
     const plans = await Plan.findAll({
       order: ['created_at'],
       attributes: ['id', 'title', 'duration', 'price'],
-      limit: 8,
-      offset: (page - 1) * 8,
+      limit: 7,
+      offset: (page - 1) * 7,
     });
 
     return res.json(plans);
