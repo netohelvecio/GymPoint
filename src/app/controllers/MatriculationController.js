@@ -91,17 +91,32 @@ class MatriculationController {
   }
 
   async index(req, res) {
-    const { page = 1 } = req.query;
+    //const { page = 1 } = req.query;
 
     // matriculas existentes
     const matriculation = await Matriculation.findAll({
       order: ['start_date'],
-      limit: 8,
-      offset: (page - 1) * 8,
+      //limit: 8,
+      //offset: (page - 1) * 8,
       attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         { model: Student, as: 'student', attributes: ['name', 'email'] },
         { model: Plan, as: 'plan', attributes: ['title', 'duration'] },
+      ],
+    });
+
+    return res.json(matriculation);
+  }
+  
+  async show(req, res) {
+    const { id } = req.params;
+
+    // lista unico student pelo id
+    const matriculation = await Matriculation.findByPk(id, {
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+      include: [
+        { model: Student, as: 'student', attributes: ['name', 'email'] },
+        { model: Plan, as: 'plan', attributes: ['title', 'duration', 'id', 'price'] },
       ],
     });
 

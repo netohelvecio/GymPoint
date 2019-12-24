@@ -14,8 +14,11 @@ class AnswerController {
     // lista perguntas não respondidas
     const answers = await HelpOrder.findAll({
       where: { answer: null },
-      limit: 10,
-      offset: (page - 1) * 10,
+	 include: [
+        { model: Student, as: 'student', attributes: ['name'] },
+      ],
+      limit: 7,
+      offset: (page - 1) * 7,
       order: ['created_at'],
     });
 
