@@ -61,7 +61,7 @@ class ChekinController {
     // lista checkin realizados
     const checkins = await Checkin.findAll({
       where: { student_id: id },
-      order: ['created_at'],
+      order: [['created_at', 'DESC']],
       limit: 10,
       offset: (page - 1) * 10,
       attributes: ['created_at'],
