@@ -9,6 +9,7 @@ import MatriculationController from './app/controllers/MatriculationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
 import AnswerController from './app/controllers/AnswerController';
+import StudentSessionController from './app/controllers/StudentSessionController';
 
 // import de middleware
 import authMiddleware from './app/middlewares/auth';
@@ -24,6 +25,8 @@ routes.get('/students/:id/checkins', CheckinController.index);
 
 routes.post('/students/:id/help-orders', HelpOrderController.store);
 routes.get('/students/:id/help-orders', HelpOrderController.index);
+
+routes.get('/student-session', StudentSessionController.show);
 
 // rotas depois daqui é obragatorio middlewares
 routes.use(authMiddleware);

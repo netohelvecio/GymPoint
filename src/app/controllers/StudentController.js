@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
-
 import * as Yup from 'yup';
+
 import Student from '../models/Student';
 
 class StudentController {
