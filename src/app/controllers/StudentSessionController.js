@@ -3,9 +3,9 @@ import * as Yup from 'yup';
 import Student from '../models/Student';
 
 class StudentSessionController {
-  async show(req, res) {
+  async store(req, res) {
     const schema = Yup.object().shape({
-      id: Yup.number().required(),
+      id: Yup.string().required(),
     });
 
     // verifica se o form está preenchido de forma correta

@@ -64,7 +64,7 @@ class ChekinController {
       order: [['created_at', 'DESC']],
       limit: 10,
       offset: (page - 1) * 10,
-      attributes: ['created_at'],
+      attributes: ['id', 'created_at'],
     });
 
     return res.json(checkins);
