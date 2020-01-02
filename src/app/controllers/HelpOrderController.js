@@ -53,8 +53,8 @@ class HelpOrderController {
     // lista as perguntas feitas pelo estudante
     const helpers = await HelpOrder.findAll({
       where: { student_id: id },
-      attributes: ['id', 'question', 'answer', 'answer_at'],
-      order: [['answer_at', 'DESC']],
+      attributes: ['id', 'question', 'answer', 'answer_at', 'updated_at'],
+      order: [['updated_at', 'DESC']],
       limit: 10,
       offset: (page - 1) * 10,
     });
