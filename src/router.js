@@ -19,6 +19,8 @@ const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
 
+routes.post('/', (req, res) => res.send('ok'));
+
 // rotas de alunos
 routes.post('/students/:id/checkins', CheckinController.store);
 routes.get('/students/:id/checkins', CheckinController.index);
